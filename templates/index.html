@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPL Match Predictor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a1628;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('YOUR_BACKGROUND_IMAGE_URL_HERE');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #38003c 0%, #2c0030 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            color: #00ff87;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .form-container {
+            padding: 40px 30px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #38003c;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #00ff87;
+            display: inline-block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: #38003c;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #00ff87;
+            box-shadow: 0 0 0 3px rgba(0, 255, 135, 0.1);
+        }
+
+        input[type="number"]:hover {
+            border-color: #38003c;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #38003c 0%, #2c0030 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(56, 0, 60, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(56, 0, 60, 0.4);
+            background: linear-gradient(135deg, #2c0030 0%, #38003c 100%);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: #f0f0f0;
+            color: #666;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="data:image/png;base64,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" alt="Premier League Logo">
+            </div>
+            <h1>EPL Match Predictor</h1>
+            <div class="subtitle">Predict Premier League Match Outcomes</div>
+        </div>
+
+        <form action="/predict" method="post" class="form-container">
+            <div class="form-section">
+                <div class="section-title">Match Details</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="venue_codes">
+                            Venue <span class="info-badge">0 = Away, 1 = Home</span>
+                        </label>
+                        <input type="number" id="venue_codes" name="venue_codes" value="1" min="0" max="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="opp_codes">Opponent Code</label>
+                        <input type="number" id="opp_codes" name="opp_codes" value="0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hour">
+                            Match Hour <span class="info-badge">0-23</span>
+                        </label>
+                        <input type="number" id="hour" name="hour" value="15" min="0" max="23" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="day_code">
+                            Day of Week <span class="info-badge">0=Mon, 6=Sun</span>
+                        </label>
+                        <input type="number" id="day_code" name="day_code" value="5" min="0" max="6" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">Team Performance (Last 3 Matches)</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gf_rolling">Goals For (Avg)</label>
+                        <input type="number" step="0.1" id="gf_rolling" name="gf_rolling" value="1.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ga_rolling">Goals Against (Avg)</label>
+                        <input type="number" step="0.1" id="ga_rolling" name="ga_rolling" value="1.0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sh_rolling">Shots (Avg)</label>
+                        <input type="number" step="0.1" id="sh_rolling" name="sh_rolling" value="10.0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sot_rolling">Shots on Target (Avg)</label>
+                        <input type="number" step="0.1" id="sot_rolling" name="sot_rolling" value="5.0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dist_rolling">Shot Distance (Avg)</label>
+                        <input type="number" step="0.1" id="dist_rolling" name="dist_rolling" value="18.0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fk_rolling">Free Kicks (Avg)</label>
+                        <input type="number" step="0.1" id="fk_rolling" name="fk_rolling" value="1.0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pk_rolling">Penalties Scored (Avg)</label>
+                        <input type="number" step="0.1" id="pk_rolling" name="pk_rolling" value="0.0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pkatt_rolling">Penalty Attempts (Avg)</label>
+                        <input type="number" step="0.1" id="pkatt_rolling" name="pkatt_rolling" value="0.0" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Predict Match Result</button>
+        </form>
+    </div>
+</body>
+</html>

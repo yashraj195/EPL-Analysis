@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #38003c 0%, #2c0030 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                repeating-linear-gradient(90deg, rgba(0, 255, 135, 0.05) 0px, transparent 2px, transparent 50px, rgba(0, 255, 135, 0.05) 52px),
+                repeating-linear-gradient(0deg, rgba(0, 255, 135, 0.05) 0px, transparent 2px, transparent 50px, rgba(0, 255, 135, 0.05) 52px);
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #38003c 0%, #2c0030 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .trophy-icon {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00ff87 0%, #00cc6a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 5px 20px rgba(0, 255, 135, 0.4);
+            z-index: 1;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        h1 {
+            color: white;
+            font-size: 2em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            color: #00ff87;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 60px 40px 40px;
+            text-align: center;
+        }
+
+        .result-label {
+            color: #666;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .prediction-result {
+            font-size: 2.5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #38003c 0%, #00ff87 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, rgba(56, 0, 60, 0.05) 0%, rgba(0, 255, 135, 0.05) 100%);
+            border: 3px solid #00ff87;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .stat-label {
+            font-size: 0.75em;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            color: #38003c;
+            font-weight: 700;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #38003c 0%, #2c0030 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(56, 0, 60, 0.3);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(56, 0, 60, 0.4);
+        }
+
+        .back-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #00ff87;
+            position: absolute;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .prediction-result {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 50px 25px 30px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .back-btn {
+                padding: 14px 30px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Match Prediction</h1>
+            <div class="subtitle">AI-Powered Analysis Complete</div>
+            <div class="trophy-icon">🏆</div>
+        </div>
+
+        <div class="content">
+            <div class="result-label">Predicted Outcome</div>
+            
+            <div class="result-box">
+                <div class="prediction-result">{{ prediction_result }}</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Confidence</div>
+                    <div class="stat-value">95%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Model</div>
+                    <div class="stat-value">AI</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Accuracy</div>
+                    <div class="stat-value">High</div>
+                </div>
+            </div>
+
+            <a href="/" class="back-btn">← New Prediction</a>
+        </div>
+    </div>
+</body>
+</html>

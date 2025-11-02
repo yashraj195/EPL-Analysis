@@ -1,8 +1,3 @@
-ChatGPT said:
-
-Perfect 🔥 — here’s a GitHub-ready README.md for your EPL Prediction Flask App project.
-It follows professional open-source formatting — complete with badges, setup steps, structure, and demo link.
-
 # ⚽ EPL Match Outcome Prediction (Flask + Hugging Face Spaces)
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
@@ -60,8 +55,6 @@ epl-prediction/
 │ └── model_training.ipynb # EDA and training notebook
 │
 └── README.md
-
-![Alt Text](images/preview.png)
 
 ## 🧑‍💻 Author
 Yash Raj

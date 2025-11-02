@@ -1,31 +1,39 @@
-# ⚽ Match Outcome Predictor
+# ⚽ EPL Match Predictor
 
-A simple **Flask-based Machine Learning web app** deployed on **Hugging Face Spaces**.
-
-It predicts the outcome of a match (`Win`, `Loss`, or `Draw`) based on key input metrics such as goals for/against, opponent code, venue, and rolling averages.
-
----
-
-## 🚀Live Demo
-👉 [Click here to open the app](https://huggingface.co/spaces/YOUR_USERNAME/YOUR_SPACE_NAME)
+A simple web application that predicts the outcome of English Premier League (EPL) matches using a trained Machine Learning model.  
+Built with **Flask (Python)** for the backend and deployed using **Vercel** (frontend) + **Hugging Face Spaces / Render** (for model hosting).
 
 ---
 
-## Features
-- Interactive **web interface** built with Flask + HTML
-- Fast deployment using **Hugging Face Spaces**
-- Lightweight — runs entirely in free tier
-- Simple input form for 12 statistical features
-- Real-time result display (`Win`, `Loss`, `Draw`)
+## 🚀 Live Demo
+
+🔗 **Frontend (Vercel):** [https://epl-predictor.vercel.app](https://epl-predictor.vercel.app)  
 
 ---
 
-## Tech Stack
-- **Python 3.10+**
-- **Flask**
-- **NumPy**
-- **HTML + CSS (Jinja2 templates)**
-- Deployed via **Hugging Face Spaces (Gradio/Flask SDK)**
+## 🧠 About the Project
+
+This app predicts the result of an EPL match (Win/Draw/Loss) based on input features such as:
+- Home and Away Team
+- Form statistics
+- Goals scored / conceded
+- Possession, shots, passes, and other match stats
+
+The backend uses a trained **Random Forest Classifier** (stored as `model.pkl`), while the frontend provides a clean and modern user interface to make predictions instantly.
+
+---
+
+## 🧩 Tech Stack
+
+**Frontend (Vercel)**
+- HTML5, CSS3, JavaScript
+- Responsive UI Design
+- Hosted on [Vercel](https://vercel.com)
+
+**Backend (API)**
+- Python, Flask
+- scikit-learn, pandas, numpy
+  
 
 ---
 

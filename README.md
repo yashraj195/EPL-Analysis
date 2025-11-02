@@ -6,12 +6,12 @@ It predicts the outcome of a match (`Win`, `Loss`, or `Draw`) based on key input
 
 ---
 
-## 🚀 Live Demo
+## 🚀Live Demo
 👉 [Click here to open the app](https://huggingface.co/spaces/YOUR_USERNAME/YOUR_SPACE_NAME)
 
 ---
 
-## 🧠 Features
+## Features
 - Interactive **web interface** built with Flask + HTML
 - Fast deployment using **Hugging Face Spaces**
 - Lightweight — runs entirely in free tier
@@ -20,7 +20,7 @@ It predicts the outcome of a match (`Win`, `Loss`, or `Draw`) based on key input
 
 ---
 
-## 🧩 Tech Stack
+## Tech Stack
 - **Python 3.10+**
 - **Flask**
 - **NumPy**
@@ -29,4 +29,16 @@ It predicts the outcome of a match (`Win`, `Loss`, or `Draw`) based on key input
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
+epl-analysis/ model.pkl
+├── app.py
+├── requirements.txt
+└── templates/
+    ├── index.html
+    └── result.html
+
+## Prediction Logic
+If gf_rolling > ga_rolling and venue_codes == 1 → Win  
+If gf_rolling < ga_rolling → Loss  
+Else → Draw
+
